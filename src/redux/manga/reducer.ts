@@ -1,20 +1,23 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { Manga, MangaList } from '../../api/types';
-import { setManga, loadLastVisitedManga, pushLastVisitedManga } from './actions';
+import { setMangaPreview, loadLastVisitedManga, pushLastVisitedManga, fetchMangaDetail } from './actions';
 
 type StateType = {
-  manga: Manga;
+  currentManga: Manga;
   lastVisited: MangaList;
 };
 
 const initialState: StateType = {
-  manga: { id: -1, title: '', description: '' },
+  currentManga: { id: -1, title: '', description: '' },
   lastVisited: [],
 };
 
 const reducer = createReducer(initialState, (builder) => {
-  builder.addCase(setManga, (state, action) => {
-    state.manga = action.payload;
+  builder.addCase(setMangaPreview, (state, action) => {
+    state.currentManga = action.payload;
+  });
+  builder.addCase(fetchMangaDetail.fulfilled, (state, action) => {
+    state.currentManga = action.payload;
   });
   builder.addCase(loadLastVisitedManga, (state, action) => {
     state.lastVisited = action.payload;

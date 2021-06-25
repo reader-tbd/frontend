@@ -1,9 +1,22 @@
 import { Dispatch } from 'react';
 import _ from 'lodash';
-import { MangaType } from '../../catalogs/baseCatalog';
 import { loadLastVisitedManga } from './actions';
+import { AxiosResponse } from 'axios';
+import { Manga } from '../../api/types';
 
-export const syncLastVisited = (dispatch: Dispatch<any>, clientState: Array<MangaType>) => {
+export const mangaFromResponse = (response: AxiosResponse): Manga => {
+  const lastUpdated = response.data.updated_detail;
+  return {
+    ...response.data,
+    get detailNeedsUpdate() {
+      const hourAgo = new Date();
+      hourAgo.setHours(hourAgo.getHours() - 1);
+      return new Date(lastUpdated) < hourAgo;
+    },
+  };
+};
+
+export const syncLastVisited = (dispatch: Dispatch<any>, clientState: Array<Manga>) => {
   // Sync lastVisited both from and to localStorage
   return () => {
     const data = window.localStorage.getItem('sora-last-visited') || '[]';
@@ -17,7 +30,7 @@ export const syncLastVisited = (dispatch: Dispatch<any>, clientState: Array<Mang
       // And client's state is empty (first render)
       if (_.isEmpty(clientState)) {
         // Then load cached state
-        const cachedLastVisited: Array<MangaType> = cachedState;
+        const cachedLastVisited: Array<Manga> = cachedState;
         dispatch(loadLastVisitedManga(cachedLastVisited));
       }
       // But if client state has something different, than cache

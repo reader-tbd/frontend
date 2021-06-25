@@ -11,14 +11,5 @@ const useStyles = makeStyles(() =>
 export const MangaRating = forwardRef<any, RatingProps>((props: RatingProps, ref: Ref<any>) => {
   const classes = { ...useStyles(), ...props.classes };
 
-  return (
-    <Rating
-      readOnly
-      precision={0.1}
-      className={classes.root}
-      value={props.value ? props.value / 2 : 0}
-      ref={ref}
-      {...props}
-    />
-  );
+  return <Rating readOnly precision={0.1} className={classes.root} ref={ref} {...props} />;
 });

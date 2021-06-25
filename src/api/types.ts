@@ -12,6 +12,7 @@ export interface Manga {
   categories?: string[];
   status?: string;
   year?: string;
+  detailNeedsUpdate?: boolean;
 }
 export interface MangaList extends Array<Manga> {}
 export interface MangaList_ extends Array<Manga> {}

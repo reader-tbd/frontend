@@ -6,9 +6,9 @@ import { MangaList } from '../../api/types';
 export const SEARCH_MANGA = 'SEARCH_MANGA';
 export const SET_SEARCH_INPUT_REF = 'SET_SEARCH_INPUT_REF';
 
-export const startSearch = createAsyncThunk(
+export const startSearch = createAsyncThunk<{ query: string; results: MangaList }, string>(
   'search/start',
-  async (query: string): Promise<{ query: string; results: MangaList }> => {
+  async (query: string) => {
     const response = await axios.get('manga/search/', {
       params: {
         title: query,

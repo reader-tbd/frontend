@@ -80,7 +80,7 @@ export function MangaDetailHeader(props: Props) {
 
   return (
     <div className={classes.root}>
-      <MangaImage src={props.thumbnail} variant="rounded" className={classes.avatar} />
+      <MangaImage src={props.image} variant="rounded" className={classes.avatar} />
       <div className={classes.details}>
         <h1 className={classes.title}>{props.title}</h1>
         <p className={classes.author}>{props.authors?.join(', ')}</p>

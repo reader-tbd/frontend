@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
 import { MangaListItemDesc } from './MangaListItemDesc';
 import { MangaImage } from '../MangaImage';
-import { setManga } from '../../../redux/manga/actions';
+import { setMangaPreview } from '../../../redux/manga/actions';
 import { Manga } from '../../../api/types';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -37,9 +37,9 @@ export function MangaListItem(props: Props) {
   const dispatch = useDispatch();
 
   const passManga = useCallback(() => {
-    dispatch(setManga(data));
-    router.push('/detail');
-  }, [router, data, setManga]);
+    dispatch(setMangaPreview(data));
+    router.push(`/detail/${data.id}`);
+  }, [router, data, setMangaPreview]);
 
   return (
     <ListItem button onClick={passManga} key={data.id} alignItems="flex-start" className={classes.root}>
