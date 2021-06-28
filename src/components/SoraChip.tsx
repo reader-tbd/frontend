@@ -14,9 +14,10 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export const GenreChip = forwardRef<any, ChipProps>((props: ChipProps, ref: Ref<any>) => {
-  const propClasses = props.classes ? props.classes : {};
-  const classes = { ...useStyles(), ...propClasses };
+type SoraChipProps = ChipProps<any, {component: any}>
+
+export const SoraChip = forwardRef<any, SoraChipProps>((props: SoraChipProps, ref: Ref<any>) => {
+  const classes = { ...useStyles(), ...props.classes };
 
   const theme = useTheme();
   const smallMedia = useMediaQuery(theme.breakpoints.down('sm'));

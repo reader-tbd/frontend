@@ -1,5 +1,5 @@
 import { Dispatch } from 'react';
-import _ from 'lodash';
+import isEmpty from 'lodash.isempty';
 import { loadLastVisitedManga } from './actions';
 import { AxiosResponse } from 'axios';
 import { Manga } from '../../api/types';
@@ -28,7 +28,7 @@ export const syncLastVisited = (dispatch: Dispatch<any>, clientState: Array<Mang
     // If they're not equal
     if (needsUpdate) {
       // And client's state is empty (first render)
-      if (_.isEmpty(clientState)) {
+      if (isEmpty(clientState)) {
         // Then load cached state
         const cachedLastVisited: Array<Manga> = cachedState;
         dispatch(loadLastVisitedManga(cachedLastVisited));

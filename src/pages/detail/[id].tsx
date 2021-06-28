@@ -11,6 +11,7 @@ import { fetchMangaDetail, pushLastVisitedManga } from '../../redux/manga/action
 import { Manga } from '../../api/types';
 import { unwrapResult } from '@reduxjs/toolkit';
 import { TDispatch } from '../../redux/types';
+import { GetServerSideProps } from 'next';
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -18,15 +19,23 @@ const useStyles = makeStyles(() =>
   })
 );
 
-export default function Detail() {
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  return {
+    props: { mangaId: Number(context.params?.id) },
+  };
+};
+type Props = {
+  mangaId: Number;
+};
+
+export default function Detail({ mangaId }: Props) {
   const classes = useStyles();
   const router = useRouter();
-  const { id } = router.query;
-  const mangaId = Number(id ? id[0] : '' || id);
   const manga: Manga = useSelector((state: RootState) => state.manga.currentManga);
   const dispatch = useDispatch() as TDispatch;
 
   useEffect(() => {
+    console.log(mangaId, router.query.id);
     if (!mangaId) {
       console.log('No data');
       router.push('/search');

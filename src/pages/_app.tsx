@@ -1,4 +1,4 @@
-import '../styles/globals.css';
+// import '../styles/globals.css';
 import React, { useEffect, useState } from 'react';
 import { AppProps } from 'next/app';
 import {
@@ -12,7 +12,6 @@ import {
   ThemeProvider,
 } from '@material-ui/core';
 import Head from 'next/head';
-import GoogleFonts from 'next-google-fonts';
 import { useSelector, useStore } from 'react-redux';
 import { Header } from '../components/Header';
 import { RootState, StoreType, wrapper } from '../redux/store';
@@ -27,6 +26,30 @@ type StyleProps = { minHeight: string };
 const useStyles = (theme: Theme) =>
   makeStyles<Theme, StyleProps>(() =>
     createStyles({
+      '@global': {
+        html: {
+          '&::-webkit-scrollbar': {
+            display: 'none',
+          },
+          'scrollbar-width': 'none',
+          '-ms-overflow-style': 'none',
+          'min-height': '100% !important',
+        },
+        body: {
+          // TODO: stop using minHeight 100%/100vh everywhere
+          'min-height': '100% !important',
+          'font-family': "-apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif",
+          '-webkit-font-smoothing': 'antialiased',
+          '-moz-osx-font-smoothing': 'grayscale',
+          margin: 0,
+        },
+
+        // TODO: override Typograhpy
+        'h1, h2, h3, h4, h5, h6': {
+          'font-family':
+            "-apple-system, BlinkMacSystemFont, 'Montserrat', 'Roboto', 'Helvetica Neue', sans-serif !important",
+        },
+      },
       box: {
         minHeight: ({ minHeight }) => minHeight,
         padding: theme.spacing(0),
@@ -79,8 +102,6 @@ function WrappedApp(props: AppProps) {
 
   return (
     <>
-      <GoogleFonts href={'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap'} />
-      <GoogleFonts href={'https://fonts.googleapis.com/css2?family=Montserrat&display=swap'} />
       <Head>
         <title>
           Sora

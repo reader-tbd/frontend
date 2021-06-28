@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { Color, ColorPicker } from 'material-ui-color';
 import { Button, createStyles, makeStyles, Theme } from '@material-ui/core';
 import createPalette, { PaletteOptions, SimplePaletteColorOptions } from '@material-ui/core/styles/createPalette';
-import { GenreChip } from '../../manga/GenreChip';
+import { SoraChip } from '../../SoraChip';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -60,7 +60,7 @@ export function PaletteChanger({ currentPalette, resetPalette, submitPalette }: 
     <div className={classes.root}>
       <p>Главный цвет, оттенки</p>
       <div className={classes.chipContainer}>
-        <GenreChip
+        <SoraChip
           onClick={() => setActiveColor('main')}
           style={{
             backgroundColor: paletteDraft.primary.main,
@@ -68,7 +68,7 @@ export function PaletteChanger({ currentPalette, resetPalette, submitPalette }: 
           }}
           label="основной"
         />
-        <GenreChip
+        <SoraChip
           onClick={() => setActiveColor('light')}
           style={{
             backgroundColor: paletteDraft.primary.light,
@@ -76,7 +76,7 @@ export function PaletteChanger({ currentPalette, resetPalette, submitPalette }: 
           }}
           label="светлый"
         />
-        <GenreChip
+        <SoraChip
           onClick={() => setActiveColor('dark')}
           style={{
             backgroundColor: paletteDraft.primary.dark,

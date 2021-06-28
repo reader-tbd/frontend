@@ -4,56 +4,56 @@
  */
 
 export interface paths {
-  "/api/auth/sign-in/": {
+  '/api/auth/sign-in/': {
     /** Sign in with user credentials */
-    post: operations["SignIn"];
+    post: operations['SignIn'];
   };
-  "/api/auth/sign-out/": {
+  '/api/auth/sign-out/': {
     /** Sign user out and blacklist his token */
-    get: operations["SignOut"];
+    get: operations['SignOut'];
   };
-  "/api/auth/sign-up/": {
+  '/api/auth/sign-up/': {
     /** Sign up and receive JWT token pair and a username */
-    post: operations["SignUp"];
+    post: operations['SignUp'];
   };
-  "/api/auth/token-refresh/": {
+  '/api/auth/token-refresh/': {
     /**
      * Takes a refresh type JSON web token and returns an access type JSON web
      * token if the refresh token is valid.
      */
-    post: operations["RefreshToken"];
+    post: operations['RefreshToken'];
   };
-  "/api/auth/token-verify/": {
+  '/api/auth/token-verify/': {
     /**
      * Takes a token and indicates if it is valid.  This view provides no
      * information about a token's fitness for a particular use.
      */
-    post: operations["VerifyToken"];
+    post: operations['VerifyToken'];
   };
-  "/api/manga/{mangaId}": {
+  '/api/manga/{mangaId}': {
     /** Returns detailed info about manga */
-    get: operations["mangaDetail"];
+    get: operations['mangaDetail'];
   };
-  "/api/manga/{mangaId}/volumes": {
+  '/api/manga/{mangaId}/volumes': {
     /** Returns volumes for manga */
-    get: operations["mangaChapters"];
+    get: operations['mangaChapters'];
   };
-  "/api/manga/{mangaId}/{volumeId}/{chapterId}": {
+  '/api/manga/{mangaId}/{volumeId}/{chapterId}': {
     /** Returns images for chapter */
-    get: operations["mangaChapterImages"];
+    get: operations['mangaChapterImages'];
   };
-  "/api/manga/search": {
+  '/api/manga/search': {
     /** Returns a list of manga items */
-    get: operations["search"];
+    get: operations['search'];
   };
-  "/api/docs/schema/": {
+  '/api/docs/schema/': {
     /**
      * OpenApi3 schema for this API. Format can be selected via content negotiation.
      *
      * - YAML: application/vnd.oai.openapi
      * - JSON: application/vnd.oai.openapi+json
      */
-    get: operations["GetSchema"];
+    get: operations['GetSchema'];
   };
 }
 
@@ -68,18 +68,19 @@ export interface components {
       image?: string;
       description: string;
       source?: string;
+      source_url?: string;
       authors?: string[];
       genres?: string[];
       categories?: string[];
       status?: string;
       year?: string;
     };
-    MangaList: components["schemas"]["Manga"][];
+    MangaList: components['schemas']['Manga'][];
     MangaChapter: string;
     MangaChapterImage: string;
-    MangaChapterImages: components["schemas"]["MangaChapterImage"][];
-    MangaVolume: components["schemas"]["MangaChapter"][];
-    MangaVolumes: { [key: string]: components["schemas"]["MangaVolume"] };
+    MangaChapterImages: components['schemas']['MangaChapterImage'][];
+    MangaVolume: components['schemas']['MangaChapter'][];
+    MangaVolumes: { [key: string]: components['schemas']['MangaVolume'] };
     VerifyToken: {
       token: string;
     };
@@ -109,13 +110,13 @@ export interface operations {
       /** successful operation */
       200: {
         content: {
-          "application/json": components["schemas"]["TokenResponse"];
+          'application/json': components['schemas']['TokenResponse'];
         };
       };
     };
     requestBody: {
       content: {
-        "application/json": components["schemas"]["UserCredentials"];
+        'application/json': components['schemas']['UserCredentials'];
       };
     };
   };
@@ -132,13 +133,13 @@ export interface operations {
       /** successful operation */
       200: {
         content: {
-          "application/json": components["schemas"]["TokenResponse"];
+          'application/json': components['schemas']['TokenResponse'];
         };
       };
     };
     requestBody: {
       content: {
-        "application/json": components["schemas"]["UserCredentials"];
+        'application/json': components['schemas']['UserCredentials'];
       };
     };
   };
@@ -151,13 +152,13 @@ export interface operations {
       /** successful operation */
       200: {
         content: {
-          "application/json": components["schemas"]["AccessToken"];
+          'application/json': components['schemas']['AccessToken'];
         };
       };
     };
     requestBody: {
       content: {
-        "application/json": components["schemas"]["RefreshToken"];
+        'application/json': components['schemas']['RefreshToken'];
       };
     };
   };
@@ -170,13 +171,13 @@ export interface operations {
       /** successful operation */
       200: {
         content: {
-          "application/json": components["schemas"]["VerifyToken"];
+          'application/json': components['schemas']['VerifyToken'];
         };
       };
     };
     requestBody: {
       content: {
-        "application/json": components["schemas"]["VerifyToken"];
+        'application/json': components['schemas']['VerifyToken'];
       };
     };
   };
@@ -192,7 +193,7 @@ export interface operations {
       /** successful operation */
       200: {
         content: {
-          "application/json": components["schemas"]["Manga"];
+          'application/json': components['schemas']['Manga'];
         };
       };
       /** Manga not found */
@@ -211,7 +212,7 @@ export interface operations {
       /** successful operation */
       200: {
         content: {
-          "application/json": components["schemas"]["MangaVolumes"];
+          'application/json': components['schemas']['MangaVolumes'];
         };
       };
       /** Manga not found */
@@ -234,7 +235,7 @@ export interface operations {
       /** successful operation */
       200: {
         content: {
-          "application/json": components["schemas"]["MangaChapterImages"];
+          'application/json': components['schemas']['MangaChapterImages'];
         };
       };
       /** Manga or volume not found */
@@ -253,7 +254,7 @@ export interface operations {
       /** successful operation */
       200: {
         content: {
-          "application/json": { [key: string]: any }[];
+          'application/json': { [key: string]: any }[];
         };
       };
     };
@@ -267,114 +268,114 @@ export interface operations {
   GetSchema: {
     parameters: {
       query: {
-        format?: "json" | "yaml";
+        format?: 'json' | 'yaml';
         lang?:
-          | "af"
-          | "ar"
-          | "ar-dz"
-          | "ast"
-          | "az"
-          | "be"
-          | "bg"
-          | "bn"
-          | "br"
-          | "bs"
-          | "ca"
-          | "cs"
-          | "cy"
-          | "da"
-          | "de"
-          | "dsb"
-          | "el"
-          | "en"
-          | "en-au"
-          | "en-gb"
-          | "eo"
-          | "es"
-          | "es-ar"
-          | "es-co"
-          | "es-mx"
-          | "es-ni"
-          | "es-ve"
-          | "et"
-          | "eu"
-          | "fa"
-          | "fi"
-          | "fr"
-          | "fy"
-          | "ga"
-          | "gd"
-          | "gl"
-          | "he"
-          | "hi"
-          | "hr"
-          | "hsb"
-          | "hu"
-          | "hy"
-          | "ia"
-          | "id"
-          | "ig"
-          | "io"
-          | "is"
-          | "it"
-          | "ja"
-          | "ka"
-          | "kab"
-          | "kk"
-          | "km"
-          | "kn"
-          | "ko"
-          | "ky"
-          | "lb"
-          | "lt"
-          | "lv"
-          | "mk"
-          | "ml"
-          | "mn"
-          | "mr"
-          | "my"
-          | "nb"
-          | "ne"
-          | "nl"
-          | "nn"
-          | "os"
-          | "pa"
-          | "pl"
-          | "pt"
-          | "pt-br"
-          | "ro"
-          | "ru"
-          | "sk"
-          | "sl"
-          | "sq"
-          | "sr"
-          | "sr-latn"
-          | "sv"
-          | "sw"
-          | "ta"
-          | "te"
-          | "tg"
-          | "th"
-          | "tk"
-          | "tr"
-          | "tt"
-          | "udm"
-          | "uk"
-          | "ur"
-          | "uz"
-          | "vi"
-          | "zh-hans"
-          | "zh-hant";
+          | 'af'
+          | 'ar'
+          | 'ar-dz'
+          | 'ast'
+          | 'az'
+          | 'be'
+          | 'bg'
+          | 'bn'
+          | 'br'
+          | 'bs'
+          | 'ca'
+          | 'cs'
+          | 'cy'
+          | 'da'
+          | 'de'
+          | 'dsb'
+          | 'el'
+          | 'en'
+          | 'en-au'
+          | 'en-gb'
+          | 'eo'
+          | 'es'
+          | 'es-ar'
+          | 'es-co'
+          | 'es-mx'
+          | 'es-ni'
+          | 'es-ve'
+          | 'et'
+          | 'eu'
+          | 'fa'
+          | 'fi'
+          | 'fr'
+          | 'fy'
+          | 'ga'
+          | 'gd'
+          | 'gl'
+          | 'he'
+          | 'hi'
+          | 'hr'
+          | 'hsb'
+          | 'hu'
+          | 'hy'
+          | 'ia'
+          | 'id'
+          | 'ig'
+          | 'io'
+          | 'is'
+          | 'it'
+          | 'ja'
+          | 'ka'
+          | 'kab'
+          | 'kk'
+          | 'km'
+          | 'kn'
+          | 'ko'
+          | 'ky'
+          | 'lb'
+          | 'lt'
+          | 'lv'
+          | 'mk'
+          | 'ml'
+          | 'mn'
+          | 'mr'
+          | 'my'
+          | 'nb'
+          | 'ne'
+          | 'nl'
+          | 'nn'
+          | 'os'
+          | 'pa'
+          | 'pl'
+          | 'pt'
+          | 'pt-br'
+          | 'ro'
+          | 'ru'
+          | 'sk'
+          | 'sl'
+          | 'sq'
+          | 'sr'
+          | 'sr-latn'
+          | 'sv'
+          | 'sw'
+          | 'ta'
+          | 'te'
+          | 'tg'
+          | 'th'
+          | 'tk'
+          | 'tr'
+          | 'tt'
+          | 'udm'
+          | 'uk'
+          | 'ur'
+          | 'uz'
+          | 'vi'
+          | 'zh-hans'
+          | 'zh-hant';
       };
     };
     responses: {
       /** successful operation */
       200: {
         content: {
-          "application/vnd.oai.openapi": { [key: string]: any };
-          "application/yaml": { [key: string]: any };
-          "application/vnd.oai.openapi+json": { [key: string]: any };
-          "application/json": { [key: string]: any };
+          'application/vnd.oai.openapi': { [key: string]: any };
+          'application/yaml': { [key: string]: any };
+          'application/vnd.oai.openapi+json': { [key: string]: any };
+          'application/json': { [key: string]: any };
         };
       };
     };

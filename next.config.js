@@ -13,6 +13,5 @@ module.exports = withPWA({
   env: {
     BACKEND_URL: process.env.BACKEND_URL,
     BACKEND_PORT: process.env.BACKEND_PORT,
-    CORS_Proxy: process.env.CORS_Proxy,
   },
 });

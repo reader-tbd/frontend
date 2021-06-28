@@ -1,6 +1,6 @@
 import React from 'react';
 import { createStyles, ListItemText, makeStyles, Theme } from '@material-ui/core';
-import { GenreChip } from '../GenreChip';
+import { SoraChip } from '../../SoraChip';
 import { Manga } from '../../../api/types';
 import { MangaRating } from '../MangaRating';
 
@@ -54,8 +54,7 @@ export function MangaListItemDesc(props: Props) {
         <ListItemText className={classes.author}>{props.authors?.join(', ')}</ListItemText>
         <ul className={classes.genres}>
           {props.genres?.map((genre) => (
-            // @ts-ignore
-            <GenreChip component="li" label={genre} key={genre} />
+            <SoraChip component="li" label={genre} key={genre} />
           ))}
         </ul>
       </div>

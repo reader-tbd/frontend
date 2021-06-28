@@ -7,6 +7,7 @@ export interface Manga {
   image?: string;
   description: string;
   source?: string;
+  source_url?: string;
   authors?: string[];
   genres?: string[];
   categories?: string[];

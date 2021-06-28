@@ -1,7 +1,7 @@
 import React from 'react';
 import { createStyles, makeStyles, Theme } from '@material-ui/core';
 import { MangaImage } from '../MangaImage';
-import { GenreChip } from '../GenreChip';
+import { SoraChip } from '../../SoraChip';
 import { Manga } from '../../../api/types';
 import { MangaRating } from '../MangaRating';
 
@@ -86,10 +86,10 @@ export function MangaDetailHeader(props: Props) {
         <p className={classes.author}>{props.authors?.join(', ')}</p>
         <ul className={classes.genres}>
           {props.genres?.map((genre) => (
-            // @ts-ignore
-            <GenreChip component="li" label={genre} key={genre} />
+            <SoraChip component="li" label={genre} key={genre} />
           ))}
         </ul>
+        <SoraChip component="a" target="_blank" href={props.source_url} label={props.source} clickable />
         <div className={classes.ratingContainer}>
           <MangaRating value={props.rating} />
           <p>
