@@ -1,39 +1,27 @@
 import { useCallback, useState } from 'react';
-import { createStyles, makeStyles } from '@material-ui/core';
-import { useKeyboardScroll } from '../../utils/reader/scrollHandler';
 import SwipeableViews from 'react-swipeable-views';
 import { bindKeyboard } from 'react-swipeable-views-utils';
-import { roundBinary } from './utils';
-import { useGetValidImageNumber, useNextChapterLink, useUserScalable } from '../pager/hooks';
-import { ReaderImage } from './ReaderImage';
-import { Manga } from '../../utils/apiTypes';
-import { CurrentChapter } from '../../redux/manga/reducer';
-import { ReaderMode } from './types';
-
-const useStyles = makeStyles(() =>
-  createStyles({
-    root: {
-      minHeight: '100vh',
-      padding: 'auto',
-    },
-  })
-);
-
-const BindKeyboardSwipeableViews = bindKeyboard(SwipeableViews);
+import { roundBinary } from '../../reader/utils';
+import { useGetValidImageNumber, useNextChapterLink } from '../../pager/hooks';
+import { ReaderImage } from '../../reader/ReaderImage';
+import { Manga } from '../../../utils/apiTypes';
+import { CurrentChapter } from '../../../redux/manga/reducer';
+import { createStyles, makeStyles, Theme } from '@material-ui/core';
 
 type Props = {
   manga: Manga;
   chapter: CurrentChapter;
-  mode: ReaderMode;
 };
 
-export const Reader = ({ manga, chapter, mode }: Props) => {
+const useStyles = makeStyles<Theme>((theme: Theme) => createStyles({}));
+
+const BindKeyboardSwipeableViews = bindKeyboard(SwipeableViews);
+
+export const DefaultPager = ({ manga, chapter }: Props) => {
   const classes = useStyles();
   const [currentImage, setCurrentImage] = useState(0);
   const validImageNumber = useGetValidImageNumber(chapter.images);
 
-  useUserScalable();
-  useKeyboardScroll(chapter.images);
   const nextChapterLink = useNextChapterLink(manga, chapter);
 
   const onChangeIndex = useCallback(
@@ -64,8 +52,4 @@ export const Reader = ({ manga, chapter, mode }: Props) => {
       )}
     </div>
   );
-};
-
-Reader.defaultProps = {
-  mode: 'default',
 };

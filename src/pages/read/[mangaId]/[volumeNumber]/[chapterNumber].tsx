@@ -7,7 +7,7 @@ import { RootState } from '../../../../redux/store';
 import { TDispatch } from '../../../../redux/types';
 import { fetchAll } from '../../../../components/reader/utils';
 import { fetchChapterImages } from '../../../../redux/manga/actions';
-import { CenteredProgress } from '../../../../components/reader/CenteredProgress';
+import { CenteredProgress } from '../../../../components/CenteredProgress';
 import { ReaderMode } from '../../../../components/reader/types';
 
 export const getServerSideProps: GetServerSideProps = async (context) => {

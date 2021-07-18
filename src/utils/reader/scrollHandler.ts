@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { MangaChapterImages } from '../apiTypes';
 import { VH } from '../css';
 
@@ -13,7 +13,6 @@ const scrollVh = (direction: 'up' | 'down' = 'down') => {
 export const useKeyboardScroll = (images?: MangaChapterImages) => {
   const scrollKBHandler = getScrollKBHandler(images);
   useEffect(() => {
-    // bindKeyboard is messing stuff up
     document.removeEventListener('keydown', scrollKBHandler);
     document.addEventListener('keydown', scrollKBHandler);
     return () => {
@@ -23,16 +22,19 @@ export const useKeyboardScroll = (images?: MangaChapterImages) => {
 };
 
 export const getScrollKBHandler = (images?: MangaChapterImages) => {
-  return function (e: KeyboardEvent): any {
-    if (!['ArrowDown', 'ArrowUp'].includes(e.key) || e.repeat || !images) return;
-    e.preventDefault();
-    switch (e.key) {
-      case 'ArrowDown':
-        scrollVh('down');
-        break;
-      case 'ArrowUp':
-        scrollVh('up');
-        break;
-    }
-  };
+  return useCallback(
+    function (e: KeyboardEvent): any {
+      if (!['ArrowDown', 'ArrowUp'].includes(e.key) || e.repeat || !images) return;
+      e.preventDefault();
+      switch (e.key) {
+        case 'ArrowDown':
+          scrollVh('down');
+          break;
+        case 'ArrowUp':
+          scrollVh('up');
+          break;
+      }
+    },
+    [images]
+  );
 };

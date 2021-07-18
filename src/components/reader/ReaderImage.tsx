@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { createStyles, makeStyles } from '@material-ui/core';
 import { Avatar } from '@material-ui/core';
-import { CenteredProgress } from './CenteredProgress';
+import { CenteredProgress } from '../CenteredProgress';
 
 const useStyles = makeStyles(() =>
   createStyles({
