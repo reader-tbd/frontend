@@ -1,16 +1,9 @@
-import { CurrentChapter, CurrentChapterImages } from '../../redux/manga/reducer';
-import { Manga } from '../../utils/apiTypes';
 import { WebtoonImage } from './WebtoonImage';
 import { useScrolledBottom } from '../../utils/hooks';
 import { GoNextButton } from '../reader/GoNextButton';
+import { PagerProps } from '../reader/types';
 
-type Props = {
-  manga: Manga;
-  chapter: CurrentChapter & Required<CurrentChapterImages>;
-  nextChapterLink?: string;
-};
-
-export const WebtoonPager = ({ manga, chapter, nextChapterLink }: Props) => {
+export const WebtoonPager = ({ manga, chapter, nextChapterLink }: PagerProps) => {
   /**
    * Webtoon pager. Append every other image to the bottom to form complete canvas
    */
