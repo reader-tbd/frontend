@@ -35,7 +35,7 @@ export const PagerImage = forwardRef(({ image, current, persist }: ReaderImagePr
     if (!persist) return;
     current && loaded;
     return loaded;
-  }, [visited, loaded, current]);
+  }, [persist, visited, loaded, current]);
 
   useEffect(() => {
     if (current && !visited) {
@@ -46,7 +46,7 @@ export const PagerImage = forwardRef(({ image, current, persist }: ReaderImagePr
       };
       setVisited(true);
     }
-  }, [current]);
+  }, [image, visited, current]);
 
   return (
     <div ref={ref}>

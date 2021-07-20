@@ -34,7 +34,7 @@ export const DefaultPager = ({ manga, chapter, nextChapterLink }: Props) => {
         window.scroll({ top: 0 });
       }
     },
-    [chapter.images, currentImage, setCurrentImage]
+    [validImageNumber, chapter.images, currentImage, setCurrentImage]
   );
 
   return (

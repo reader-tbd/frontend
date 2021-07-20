@@ -8,6 +8,7 @@ import {
   fetchMangaChapters,
   setCurrentChapter,
   fetchChapterImages,
+  fetchAll,
 } from './actions';
 
 export type CurrentChapterImages = { images?: MangaChapterImages };
@@ -25,21 +26,26 @@ const initialState: StateType = {
 };
 
 const reducer = createReducer(initialState, (builder) => {
+  // Manga
   builder.addCase(setCurrentManga, (state, action) => {
     state.current = action.payload;
   });
+  builder.addCase(fetchMangaDetail.fulfilled, (state, action) => {
+    state.current = { ...state.current, ...action.payload };
+  });
+
+  // Chapter
   builder.addCase(setCurrentChapter, (state, action) => {
     state.chapter = action.payload;
   });
   builder.addCase(fetchChapterImages.fulfilled, (state, action) => {
     if (state.chapter) state.chapter.images = action.payload;
   });
-  builder.addCase(fetchMangaDetail.fulfilled, (state, action) => {
-    state.current = { ...state.current, ...action.payload };
-  });
   builder.addCase(fetchMangaChapters.fulfilled, (state, action) => {
     state.current.chapters = action.payload;
   });
+
+  // Viewed
   builder.addCase(loadViewedManga, (state, action) => {
     state.viewed = action.payload;
   });
@@ -52,6 +58,12 @@ const reducer = createReducer(initialState, (builder) => {
     }
 
     state.viewed = newViewed;
+  });
+
+  // Other
+  builder.addCase(fetchAll.fulfilled, (state, action) => {
+    state.current = action.payload.manga;
+    state.chapter = action.payload.chapter;
   });
 });
 

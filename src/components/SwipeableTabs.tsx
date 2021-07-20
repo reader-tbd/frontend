@@ -71,13 +71,18 @@ export function SwipeableTabs(props: Props) {
     return 0;
   }, [queryTab]);
 
-  const changeTab = (value: Number) => {
-    router.replace(`${router.asPath.split('?')[0]}?tab=${value}`);
-  };
-  const handleChange = useCallback((_, newValue: number) => {
-    changeTab(newValue);
-  }, []);
-  const handleChangeIndex = useCallback(changeTab, []);
+  const changeTab = useCallback(
+    (value: Number) => {
+      router.replace(`${router.asPath.split('?')[0]}?tab=${value}`);
+    },
+    [router]
+  );
+  const handleChange = useCallback(
+    (_, newValue: number) => {
+      changeTab(newValue);
+    },
+    [changeTab]
+  );
 
   return (
     <div>
@@ -88,11 +93,7 @@ export function SwipeableTabs(props: Props) {
           ))}
         </Tabs>
       </AppBar>
-      <SwipeableViews
-        axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-        index={value}
-        onChangeIndex={handleChangeIndex}
-      >
+      <SwipeableViews axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'} index={value} onChangeIndex={changeTab}>
         {panels.map(([_, jsx], index) => (
           <TabPanel key={index} className={classes.tabPanel} value={value} index={index} dir={theme.direction}>
             {jsx}

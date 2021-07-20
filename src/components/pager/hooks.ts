@@ -1,17 +1,12 @@
-import { MutableRefObject, useCallback, useEffect, useLayoutEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import { Manga, MangaChapter, MangaChapterImages } from '../../utils/apiTypes';
-import { VH } from '../../utils/css';
+import { getKeyboardScrollHandler } from './utils';
 
-const scrollVh = (direction: 'up' | 'down' = 'down') => {
-  // Scroll 80% of viewport height
-  window.scroll({
-    top: window.scrollY + VH() * 0.8 * (direction === 'up' ? -1 : 1),
-    behavior: 'smooth',
-  });
-};
-
+/**
+ * Use keyUp/Down listener which scrolls image up/down
+ */
 export const useKeyboardScroll = (images?: MangaChapterImages) => {
-  const scrollKBHandler = getScrollKBHandler(images);
+  const scrollKBHandler = getKeyboardScrollHandler(images);
   useEffect(() => {
     // bindKeyboard is messing stuff up
     document.removeEventListener('keydown', scrollKBHandler);
@@ -22,52 +17,44 @@ export const useKeyboardScroll = (images?: MangaChapterImages) => {
   }, [images]);
 };
 
-export const getScrollKBHandler = (images?: MangaChapterImages) => {
-  return function (e: KeyboardEvent): any {
-    if (!['ArrowDown', 'ArrowUp'].includes(e.key) || e.repeat || !images) return;
-    e.preventDefault();
-    switch (e.key) {
-      case 'ArrowDown':
-        scrollVh('down');
-        break;
-      case 'ArrowUp':
-        scrollVh('up');
-        break;
+/**
+ * Get memoized chapter which comes after the current. (All chapters are sorted by volume and number)
+ * Either return the chapter with the same volume and chapter number higher
+ * Or the first chapter with volume more than the current
+ */
+export const getNextChapter = (manga: Manga, chapter?: MangaChapter) => {
+  if (!manga.chapters || !chapter) return;
+  let nextChapter;
+  const sameVolumeChapters = manga.chapters.filter(
+    (chapterElement) => chapterElement.volume === chapter.volume && chapterElement.number > chapter.number
+  );
+
+  if (sameVolumeChapters.length) {
+    nextChapter = sameVolumeChapters.sort((a, b) => a.number - b.number)[0];
+  } else {
+    const nextVolumeChapters = manga.chapters.filter((chapterElement) => chapterElement.volume > chapter.volume);
+    if (nextVolumeChapters.length) {
+      nextChapter = nextVolumeChapters.sort((a, b) => a.volume - b.volume || a.number - b.number)[0];
     }
-  };
+  }
+
+  return nextChapter;
 };
 
+/**
+ * Return memoized value for next chapter link
+ */
 export const useNextChapterLink = (manga: Manga, chapter?: MangaChapter) =>
   useMemo(() => {
-    if (!manga.chapters || !chapter) return;
-    const nextChapter = manga.chapters.find((chapterElement) => {
-      return chapterElement.volume === chapter.volume && chapterElement.number === chapter.number + 1;
-    });
+    const nextChapter = getNextChapter(manga, chapter);
     if (nextChapter) {
-      return `/read/${manga.id}/${chapter.volume}/${chapter.number + 1}`;
+      return `/read/${manga.id}/${nextChapter.volume}/${nextChapter.number}`;
     }
   }, [manga, chapter]);
 
-export const useGetValidImageNumber = (images?: MangaChapterImages) =>
-  useCallback((value: number) => (0 <= value && value < (images?.length || -1) ? value : undefined), [images]);
-
-export const useVisible = (rootElRef: MutableRefObject<any>, top?: any) => {
-  const [visible, setVisible] = useState(false);
-  useLayoutEffect(() => {
-    if (rootElRef && rootElRef.current) {
-      const ob = new IntersectionObserver(
-        ([entry]) => {
-          setVisible(entry.isIntersecting);
-        },
-        {
-          rootMargin: top,
-        }
-      );
-      ob.observe(rootElRef.current);
-      return () => {
-        ob.unobserve(rootElRef.current);
-      };
-    }
-  }, []);
-  return visible;
+/**
+ * Return memoized callback of function which detects if the value is a valid image number for given image list
+ */
+export const useGetValidImageNumber = (images?: MangaChapterImages) => {
+  return useCallback((value: number) => (0 <= value && value < (images?.length || -1) ? value : undefined), [images]);
 };

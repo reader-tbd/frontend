@@ -11,7 +11,7 @@ import { useThemeHooks } from '../redux/theme/utils';
 import { Box, Container, LinearProgress, ThemeProvider } from '@material-ui/core';
 import { Header } from '../components/Header';
 import { useRouter } from 'next/router';
-import { useCustomEventListeners } from '../utils/eventListeners';
+import { useCustomEventListeners } from '../utils/customListeners';
 import { useNeedSpinner } from '../redux/progressBar/utils';
 import CssBaseline from '@material-ui/core/CssBaseline';
 

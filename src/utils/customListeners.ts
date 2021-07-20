@@ -12,10 +12,10 @@ export function useCustomEventListeners() {
   }, []);
 }
 
+/**
+ * Focus search on / if the target is now input, if is input then unfocus on Esc
+ */
 export function slashSearch(e: KeyboardEvent) {
-  /**
-   * Focus search on / if the target is now input, if is input then unfocus on Esc
-   */
   const target = e.target as HTMLElement;
   if (!['/', 'Escape'].includes(e.key) || !('localName' in target)) return;
 
@@ -31,10 +31,10 @@ export function slashSearch(e: KeyboardEvent) {
   }
 }
 
+/**
+ * Pressing Home/End in Firefox causes flickering somehow, Chrome is fine
+ */
 export function firefoxHomeEndFix(e: KeyboardEvent) {
-  /*
-   * Pressing Home/End in Firefox causes flickering somehow, Chrome is fine
-   */
   const target = e.target as HTMLElement;
   if (!['Home', 'End'].includes(e.key) || !('localName' in target)) return;
 

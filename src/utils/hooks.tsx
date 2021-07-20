@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { MutableRefObject, useEffect, useLayoutEffect, useState } from 'react';
 
 export const useScrolledBottom = () => {
   const [scrolledBottom, setScrolledBottom] = useState(false);
@@ -12,20 +12,26 @@ export const useScrolledBottom = () => {
   return scrolledBottom;
 };
 
-export function useStickyState(defaultValue: any, key: string) {
-  const [value, setValue] = useState(defaultValue);
-
-  useEffect(() => {
-    const stickyValue = window.localStorage.getItem(key);
-
-    if (stickyValue !== null) {
-      setValue(JSON.parse(stickyValue));
+/**
+ * Hook to determine element visibility
+ */
+export const useVisible = (rootElRef: MutableRefObject<any>, top?: any) => {
+  const [visible, setVisible] = useState(false);
+  useLayoutEffect(() => {
+    if (rootElRef && rootElRef.current) {
+      const ob = new IntersectionObserver(
+        ([entry]) => {
+          setVisible(entry.isIntersecting);
+        },
+        {
+          rootMargin: top,
+        }
+      );
+      ob.observe(rootElRef.current);
+      return () => {
+        ob.unobserve(rootElRef.current);
+      };
     }
-  }, [key]);
-
-  useEffect(() => {
-    window.localStorage.setItem(key, JSON.stringify(value));
-  }, [key, value]);
-
-  return [value, setValue];
-}
+  }, [rootElRef]);
+  return visible;
+};

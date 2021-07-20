@@ -13,13 +13,15 @@
     "ecmaVersion": 12,
     "sourceType": "module"
   },
-  "plugins": ["react", "@typescript-eslint", "unused-imports"],
+  "plugins": ["react", "react-hooks", "@typescript-eslint", "unused-imports"],
   "overrides": [
     {
       "files": ["src/**/*.ts", "src/**/*.tsx"]
     }
   ],
   "rules": {
+    "react-hooks/rules-of-hooks": "error", // Checks rules of Hooks
+    "react-hooks/exhaustive-deps": "warn", // Checks effect dependencies
     "quotes": ["error", "single"],
     "implicit-arrow-linebreak": "off",
     "max-len": [

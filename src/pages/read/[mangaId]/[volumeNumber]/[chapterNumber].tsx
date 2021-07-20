@@ -5,13 +5,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import { RootState } from '../../../../redux/store';
 import { TDispatch } from '../../../../redux/types';
-import { fetchAll } from '../../../../components/pager/utils';
-import { fetchChapterImages } from '../../../../redux/manga/actions';
+import { fetchAll, fetchChapterImages } from '../../../../redux/manga/actions';
 import { CenteredProgress } from '../../../../components/CenteredProgress';
 import { ReaderMode } from '../../../../components/reader/types';
 import { CurrentChapter, CurrentChapterImages } from '../../../../redux/manga/reducer';
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
+  console.log('Props');
   return {
     props: {
       mangaId: Number(context.query.mangaId),
@@ -37,8 +37,8 @@ export default function Read({ mangaId, volumeNumber, chapterNumber }: Props) {
   useEffect(() => {
     if (!(mangaId && volumeNumber && chapterNumber)) {
       router.push('/search');
-    } else if (!chapter) {
-      fetchAll(dispatch, mangaId, volumeNumber, chapterNumber);
+    } else if (!manga || !chapter) {
+      dispatch(fetchAll({ mangaId, volumeNumber, chapterNumber }));
     } else if (chapter && !chapter?.images) {
       dispatch(fetchChapterImages(chapter.id));
     }
