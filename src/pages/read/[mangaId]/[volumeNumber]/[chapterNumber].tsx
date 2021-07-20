@@ -62,7 +62,7 @@ export default function Read({ mangaId, volumeNumber, chapterNumber }: Props) {
     } else if (chapter && !chapter?.images) {
       dispatch(fetchChapterImages(chapter.id));
     }
-  }, []);
+  }, [dispatch, router, manga, chapter, mangaId, volumeNumber, chapterNumber]);
 
   useEffect(() => {
     if (chapter?.images?.length) {

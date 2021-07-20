@@ -33,7 +33,7 @@ export const GoNextButton = ({ nextUrl, exit }: Props) => {
 
   useEffect(() => {
     router.prefetch(String(nextUrl));
-  }, []);
+  }, [router, nextUrl]);
 
   const goNext = useCallback(() => {
     if (nextUrl && nextChapter) {
@@ -42,7 +42,7 @@ export const GoNextButton = ({ nextUrl, exit }: Props) => {
         dispatch(fetchChapterImages(nextChapter.id));
       });
     }
-  }, [nextUrl]);
+  }, [nextUrl, nextChapter, router, dispatch]);
 
   return (
     <Fab className={classes.goNext} aria-label="goNext" variant="round" color="primary" onClick={goNext}>

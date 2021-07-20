@@ -15,7 +15,7 @@ export const useScrolledBottom = () => {
 /**
  * Hook to determine element visibility
  */
-export const useVisible = (rootElRef: MutableRefObject<any>, top?: any) => {
+export const useVisible = (rootElRef: MutableRefObject<any>) => {
   const [visible, setVisible] = useState(false);
   useLayoutEffect(() => {
     if (rootElRef && rootElRef.current) {
@@ -24,7 +24,7 @@ export const useVisible = (rootElRef: MutableRefObject<any>, top?: any) => {
           setVisible(entry.isIntersecting);
         },
         {
-          rootMargin: top,
+          rootMargin: undefined,
         }
       );
       ob.observe(rootElRef.current);
@@ -32,6 +32,6 @@ export const useVisible = (rootElRef: MutableRefObject<any>, top?: any) => {
         ob.unobserve(rootElRef.current);
       };
     }
-  }, [rootElRef]);
+  }, [rootElRef.current]);
   return visible;
 };

@@ -14,7 +14,7 @@ export const useKeyboardScroll = (images?: MangaChapterImages) => {
     return () => {
       document.removeEventListener('keydown', scrollKBHandler);
     };
-  }, [images]);
+  });
 };
 
 /**

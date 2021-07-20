@@ -66,7 +66,7 @@ export default function Search() {
         setPaginating(false);
       });
     }
-  }, [scrolledBottom]);
+  }, [scrolledBottom, dispatch, storedResults]);
 
   useEffect(() => {
     if (!query) {

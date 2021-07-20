@@ -34,7 +34,7 @@ export const PagerImage = forwardRef(({ image, current, persist }: ReaderImagePr
   const shouldRender = useMemo(() => {
     if (!persist) return;
     return loaded;
-  }, [persist, visited, loaded, current]);
+  }, [persist, loaded]);
 
   useEffect(() => {
     if (current && !visited) {

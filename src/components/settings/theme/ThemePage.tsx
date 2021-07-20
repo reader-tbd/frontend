@@ -49,16 +49,16 @@ export function ThemePage() {
       <SettingPart title="Палитра темной темы">
         <PaletteChanger
           currentPalette={statePalettes.dark}
-          resetPalette={useCallback(() => dispatch(setPalette('dark', defaultDark)), [])}
-          submitPalette={useCallback((options: PaletteOptions) => dispatch(setPalette('dark', options)), [])}
+          resetPalette={useCallback(() => dispatch(setPalette('dark', defaultDark)), [dispatch])}
+          submitPalette={useCallback((options: PaletteOptions) => dispatch(setPalette('dark', options)), [dispatch])}
         />
       </SettingPart>
 
       <SettingPart title="Палитра светлой темы" noDivier>
         <PaletteChanger
           currentPalette={statePalettes.light}
-          resetPalette={useCallback(() => dispatch(setPalette('light', defaultLight)), [])}
-          submitPalette={useCallback((options: PaletteOptions) => dispatch(setPalette('light', options)), [])}
+          resetPalette={useCallback(() => dispatch(setPalette('light', defaultLight)), [dispatch])}
+          submitPalette={useCallback((options: PaletteOptions) => dispatch(setPalette('light', options)), [dispatch])}
         />
       </SettingPart>
     </div>
